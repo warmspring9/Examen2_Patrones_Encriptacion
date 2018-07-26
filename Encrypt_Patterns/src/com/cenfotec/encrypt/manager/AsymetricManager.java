@@ -66,7 +66,7 @@ public class AsymetricManager extends EncryptionMethod{
 	}
 
 	@Override
-	public void encryptMessage(String messageName, String message, String keyName) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+	public String encryptMessage(String messageName, String message, String keyName) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 		PublicKey pubKey = (PublicKey)readKeyFromFile(keyName, PUBLIC);
 		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(Cipher.ENCRYPT_MODE, pubKey);
@@ -74,7 +74,7 @@ public class AsymetricManager extends EncryptionMethod{
 	    Encoder oneEncoder = Base64.getEncoder();
 	    encryptedData = oneEncoder.encode(encryptedData);
 		writeBytesFile(messageName,encryptedData,MESSAGE_ENCRYPT_EXTENSION,PATH);
-		
+		return new String(encryptedData, StandardCharsets.UTF_8);
 	}
 	
 	Key readKeyFromFile(String keyFileName, String type) throws IOException {
@@ -102,7 +102,7 @@ public class AsymetricManager extends EncryptionMethod{
 		}
 
 	@Override
-	public void decryptMessage(String messageName, String keyName) throws Exception {
+	public String decryptMessage(String messageName, String keyName) throws Exception {
 		PrivateKey privKey = (PrivateKey)readKeyFromFile(keyName, PRIVATE);
 		Cipher cipher = Cipher.getInstance("RSA");
 		cipher.init(Cipher.DECRYPT_MODE, privKey);
@@ -111,7 +111,7 @@ public class AsymetricManager extends EncryptionMethod{
 	    String message = new String(decryptedData,StandardCharsets.UTF_8);
 	    System.out.println("El mensaje era: ");
 		System.out.println(message);
-		
+		return message;
 	}
 
 }

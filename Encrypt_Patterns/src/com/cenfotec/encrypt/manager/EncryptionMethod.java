@@ -21,8 +21,8 @@ public abstract class EncryptionMethod {
 	protected final String MESSAGE_ENCRYPT_EXTENSION = ".encript";
 	
 	public abstract void createKey(String name) throws InvalidKeySpecException, NoSuchAlgorithmException, IOException, Exception;
-	public abstract void encryptMessage(String messageName,String message, String keyName) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException;
-	public abstract void decryptMessage(String messageName,String keyName) throws InvalidKeyException, IOException, NoSuchAlgorithmException, NoSuchPaddingException, Exception;
+	public abstract String encryptMessage(String messageName,String message, String keyName) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException;
+	public abstract String decryptMessage(String messageName,String keyName) throws InvalidKeyException, IOException, NoSuchAlgorithmException, NoSuchPaddingException, Exception;
 	
 	protected void writeBytesFile(String name, byte[] content, String type, String PATH) throws FileNotFoundException, IOException {
 		FileOutputStream fos = new FileOutputStream(PATH + name + type);

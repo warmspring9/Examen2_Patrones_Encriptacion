@@ -29,7 +29,7 @@ public class SymetricManager extends EncryptionMethod{
 	}
 
 	@Override
-	public void encryptMessage(String messageName, String message, String keyName) throws FileNotFoundException, IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+	public String encryptMessage(String messageName, String message, String keyName) throws FileNotFoundException, IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
 		byte[] key = readKeyFile(keyName);
 		Cipher cipher = Cipher.getInstance("AES");
 		SecretKeySpec k = new SecretKeySpec(key,"AES");
@@ -38,7 +38,7 @@ public class SymetricManager extends EncryptionMethod{
 	    Encoder oneEncoder = Base64.getEncoder();
 	    encryptedData = oneEncoder.encode(encryptedData);
 		writeBytesFile(messageName,encryptedData,MESSAGE_ENCRYPT_EXTENSION,PATH);
-		
+		return new String(encryptedData, StandardCharsets.UTF_8);
 	}
 
 	private byte[] readKeyFile(String keyName) throws FileNotFoundException, IOException {
@@ -60,7 +60,7 @@ public class SymetricManager extends EncryptionMethod{
 	}
 	
 	@Override
-	public void decryptMessage(String messageName, String keyName) throws Exception {
+	public String decryptMessage(String messageName, String keyName) throws Exception {
 		byte[] key = readKeyFile(keyName);
 		byte[] encryptedMessage = readMessageFile(messageName,PATH);
 		System.out.println(encryptedMessage.length);
@@ -71,6 +71,7 @@ public class SymetricManager extends EncryptionMethod{
 		String message = new String(DecryptedData, StandardCharsets.UTF_8);
 		System.out.println("El mensaje era: ");
 		System.out.println(message);
+		return message;
 		
 	}
 
