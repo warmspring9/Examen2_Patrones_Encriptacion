@@ -21,7 +21,7 @@ public class EncryptionApplication {
 			do {
 				System.out.println("1.Symetric");
 				System.out.println("2.Asymetric");
-				System.out.println("3.NOT IMPLEMENTED");
+				System.out.println("3.DES");
 				type = getType(Integer.parseInt(br.readLine()));
 			} while (type==null);
 			System.out.println("1.Create key");
@@ -40,7 +40,7 @@ public class EncryptionApplication {
 		switch (pOption) {
 		case 1: return EncryptionType.SYMETRIC;
 		case 2: return EncryptionType.ASYMETRIC;
-		case 3: return null;
+		case 3: return EncryptionType.DES;
 		}
 		return null;
 	}
